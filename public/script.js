@@ -99,6 +99,11 @@ $(function() {
 
   $("#quote").hover(function(ev) {
     $(".control").toggle(ev.type == "mouseenter");
+
+    if (ev.type == "mouseenter")
+      clearTimeout(renderingTimer);
+    else
+      History.pushState(loadedQuote, null, loadedQuote.id);
   });
 
   $(".control.left").click(function(ev) {
@@ -110,6 +115,5 @@ $(function() {
     ev.preventDefault();
     clearTimeout(renderingTimer);
     History.pushState(loadedQuote, null, loadedQuote.id);
-    loadNewQuote();
   });
 });
