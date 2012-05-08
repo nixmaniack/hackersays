@@ -8,6 +8,11 @@ a { color: inherit; text-decoration: inherit; outline: 0; }
 strong   { font-weight: bolder; }
 * { @include box-sizing(border-box); }
 
+.control {
+  display: none;
+  font-size: 36px;
+}
+
 #themes {
   position: absolute; top: 90px; right: 40px;
   opacity: 0.7;

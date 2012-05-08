@@ -7,7 +7,7 @@ $(function() {
 });
 
 $(function() {
-  var renderingTimer, fetchingTimer, animationSpeed = 1000;
+  var renderingTimer, fetchingTimer, loadedQuote, animationSpeed = 1000;
 
   History.Adapter.bind(window, 'statechange', function() {
     clearTimeout(renderingTimer);
@@ -24,8 +24,9 @@ $(function() {
         loadNewQuote();
       else {
         clearTimeout(renderingTimer);
+        loadedQuote = quote;
         renderingTimer = setTimeout(function() {
-          History.pushState(quote, null, quote.id);
+          History.pushState(loadedQuote, null, loadedQuote.id);
         }, timeForReading());
       }
     })
@@ -95,4 +96,20 @@ $(function() {
 
   History.replaceState($currentQuote, null, $currentQuote.id);
   renderNewQuote($currentQuote);
+
+  $("#quote").hover(function(ev) {
+    $(".control").toggle(ev.type == "mouseenter");
+  });
+
+  $(".control.left").click(function(ev) {
+    ev.preventDefault();
+    history.back();
+  });
+
+  $(".control.right").click(function(ev) {
+    ev.preventDefault();
+    clearTimeout(renderingTimer);
+    History.pushState(loadedQuote, null, loadedQuote.id);
+    loadNewQuote();
+  });
 });
